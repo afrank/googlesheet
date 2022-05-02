@@ -223,7 +223,7 @@ class GoogleSheet:
 
         header = []
     
-        for line in portfolio:
+        for line in sheet:
             if not line or line[0] == "":
                 continue
             if not header:
