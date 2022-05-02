@@ -203,8 +203,38 @@ class GoogleSheet:
         _range = f"{self.sheet}!{self.col}{self.row}:{new_col}{new_row}"
         return self.__read(_range)
 
-    def read_sheet(self):
-        return self.read_range(len(self.all_cols)-1,500)
+    def read_sheet(self, header=False, dict_key=""):
+        """
+        if header is true uses the first row as a header
+        to create a list of dicts.
+
+        if dict_key is supplied, it will return a dict.
+        """
+
+        sheet = self.read_range(len(self.all_cols)-1,500)
+
+        if dict_key:
+            rows = {}
+        else:
+            rows = []
+
+        header = []
+    
+        for line in portfolio:
+            if not line or line[0] == "":
+                continue
+            if not header:
+                header = line
+                continue
+            row = dict(zip(header, line))
+            if dict_key:
+                k = row.get(dict_key)
+                if k:
+                    rows[k] = row
+            else:
+                rows += [ row ]
+        
+        return rows
 
     def down(self, cells=1):
         self.row += cells
