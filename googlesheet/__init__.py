@@ -203,7 +203,7 @@ class GoogleSheet:
         _range = f"{self.sheet}!{self.col}{self.row}:{new_col}{new_row}"
         return self.__read(_range)
 
-    def read_sheet(self, header=False, dict_key=""):
+    def read_sheet(self, use_header=False, dict_key=""):
         """
         if header is true uses the first row as a header
         to create a list of dicts.
@@ -212,6 +212,9 @@ class GoogleSheet:
         """
 
         sheet = self.read_range(len(self.all_cols)-1,500)
+
+        if not use_header:
+            return sheet
 
         if dict_key:
             rows = {}
